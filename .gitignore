@@ -1,0 +1,38 @@
+# Build & Dependencies
+node_modules/
+dist/
+dist-ssr/
+dev-dist/
+.vite/
+.vercel/
+.turbo/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Editor & OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db
+
+# Personal/Misc
+convertify/

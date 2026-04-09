@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply max-w-full h-full;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-bg text-text selection:bg-primary/20 min-h-full;
+    @apply dark:bg-bg-dark dark:text-text-dark;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  #root {
+    @apply min-h-full flex flex-col;
+  }
+}
+
+@layer components {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .timeline-container {
+    @apply relative border-l-2 border-dashed border-gray-300 
+      dark:border-slate-800 ml-3 pl-5 space-y-6;
+  }
+}
+
+.prose h3 {
+  @apply text-xs font-black uppercase tracking-wider text-dark/60 
+    dark:text-slate-400 mt-6 mb-2 first:mt-0;
+}
+
+.prose p {
+  @apply text-sm leading-relaxed mb-4 last:mb-0;
+}
+
+.prose hr {
+  @apply my-6 border-gray-200 dark:border-slate-800;
+}
+
+.prose strong {
+  @apply font-bold text-dark dark:text-white;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary/30 dark:border-primary/20 pl-4 
+    italic text-subtext dark:text-slate-400;
+}
+
+.prose a {
+  @apply text-primary font-bold underline decoration-primary/30 
+    underline-offset-2 hover:decoration-primary transition-colors;
+}
