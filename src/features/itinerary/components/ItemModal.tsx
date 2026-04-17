@@ -36,13 +36,25 @@ export const ItemModal = ({
   initialData, 
   title 
 }: ItemModalProps) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [
+    isSubmitting, 
+    setIsSubmitting
+  ] = useState(false);
   
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [
+    toastMessage, 
+    setToastMessage
+  ] = useState<string | null>(null);
   
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [
+    isExpanded, 
+    setIsExpanded
+  ] = useState(false);
   
-  const [formData, setFormData] = useState({
+  const [
+    formData, 
+    setFormData
+  ] = useState({
     time: '',
     title: '',
     short: '',
@@ -62,14 +74,24 @@ export const ItemModal = ({
         tag_class: initialData?.tag?.class || ''
       });
     }
-  }, [isOpen, initialData]);
+  }, [
+    isOpen, 
+    initialData
+  ]);
 
-  const showToast = (msg: string) => {
+  const showToast = (
+    msg: string
+  ) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+    
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3000);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (
+    e: React.FormEvent
+  ) => {
     e.preventDefault();
     
     if (!formData.title.trim()) {
@@ -84,12 +106,12 @@ export const ItemModal = ({
     
     try {
       await onSave({
-        time: formData.time || undefined,
-        title: formData.title,
-        short: formData.short,
-        full: formData.full || undefined,
-        tag: formData.tag_text ? {
-          text: formData.tag_text,
+        time: formData.time.trim() || undefined,
+        title: formData.title.trim(),
+        short: formData.short.trim(),
+        full: formData.full.trim() || undefined,
+        tag: formData.tag_text.trim() ? {
+          text: formData.tag_text.trim(),
           class: formData.tag_class as 'transport' | 'food' | 'activity'
         } : undefined
       });
@@ -117,11 +139,11 @@ export const ItemModal = ({
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-[10px] font-black uppercase opacity-40">
-                Time (24h)
+                Time (Optional)
               </label>
               
               <input
-                type="time"
+                type="text"
                 value={formData.time}
                 onChange={(e) => 
                   setFormData({ 
@@ -129,10 +151,10 @@ export const ItemModal = ({
                     time: e.target.value 
                   })
                 }
+                placeholder="e.g. 09:00"
                 className="w-full bg-gray-50 dark:bg-slate-800 border-2 
                   border-gray-100 dark:border-slate-700 rounded-xl px-4 py-2 
-                  text-sm font-bold outline-none focus:border-primary 
-                  appearance-none"
+                  text-sm font-bold outline-none focus:border-primary"
               />
             </div>
             

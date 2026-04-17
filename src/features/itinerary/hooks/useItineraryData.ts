@@ -18,15 +18,24 @@ const PERSISTENCE_KEY =
   `data_${APP_TITLE.toLowerCase().replace(/\s+/g, '_')}`;
 
 export function useItineraryData() {
-  const [data, setData] = useState<ItineraryDay[]>(() => {
+  const [
+    data, 
+    setData
+  ] = useState<ItineraryDay[]>(() => {
     const saved = localStorage.getItem(PERSISTENCE_KEY);
     
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [
+    isLoading, 
+    setIsLoading
+  ] = useState(true);
   
-  const [error, setError] = useState<string | null>(null);
+  const [
+    error, 
+    setError
+  ] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     try {
@@ -45,7 +54,9 @@ export function useItineraryData() {
         `)
         .order('order_index');
 
-      if (daysError) throw daysError;
+      if (daysError) {
+        throw daysError;
+      }
 
       const mappedData: ItineraryDay[] = (days || []).map((day: any) => ({
         id: day.id.toString(),
@@ -54,7 +65,7 @@ export function useItineraryData() {
           .sort((a: any, b: any) => a.order_index - b.order_index)
           .map((item: any) => ({
             id: item.id.toString(),
-            time: item.time,
+            time: item.time || undefined,
             title: item.title,
             short: item.short,
             full: item.full,
@@ -120,7 +131,9 @@ export function useItineraryData() {
     URL.revokeObjectURL(url);
   };
 
-  const addDay = async (date: string) => {
+  const addDay = async (
+    date: string
+  ) => {
     const nextOrder = data.length;
     
     const { error } = await supabase
@@ -130,7 +143,9 @@ export function useItineraryData() {
         order_index: nextOrder 
       });
       
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     
     await fetchData();
   };
@@ -144,18 +159,24 @@ export function useItineraryData() {
       .update({ date })
       .eq('id', id);
       
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     
     await fetchData();
   };
 
-  const deleteDay = async (id: string) => {
+  const deleteDay = async (
+    id: string
+  ) => {
     const { error } = await supabase
       .from('days')
       .delete()
       .eq('id', id);
       
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     
     await fetchData();
   };
@@ -172,7 +193,7 @@ export function useItineraryData() {
       .from('items')
       .insert({
         day_id: dayId,
-        time: item.time,
+        time: item.time || null,
         title: item.title,
         short: item.short,
         full: item.full,
@@ -181,7 +202,9 @@ export function useItineraryData() {
         order_index: nextOrder
       });
       
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     
     await fetchData();
   };
@@ -193,7 +216,7 @@ export function useItineraryData() {
     const { error } = await supabase
       .from('items')
       .update({
-        time: item.time,
+        time: item.time || null,
         title: item.title,
         short: item.short,
         full: item.full,
@@ -202,29 +225,39 @@ export function useItineraryData() {
       })
       .eq('id', id);
       
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     
     await fetchData();
   };
 
-  const deleteItem = async (id: string) => {
+  const deleteItem = async (
+    id: string
+  ) => {
     const { error } = await supabase
       .from('items')
       .delete()
       .eq('id', id);
       
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     
     await fetchData();
   };
 
-  const deleteItems = async (ids: string[]) => {
+  const deleteItems = async (
+    ids: string[]
+  ) => {
     const { error } = await supabase
       .from('items')
       .delete()
       .in('id', ids);
       
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     
     await fetchData();
   };
@@ -245,7 +278,9 @@ export function useItineraryData() {
       })
       .eq('id', itemId);
       
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
     
     await fetchData();
   };
@@ -363,7 +398,9 @@ export function useItineraryData() {
         }
       );
       
-      if (error) throw error;
+      if (error) {
+        throw error;
+      }
       
       localStorage.setItem(
         PERSISTENCE_KEY, 
@@ -378,7 +415,9 @@ export function useItineraryData() {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [
+    fetchData
+  ]);
 
   return { 
     data, 
